@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Key Screen — Exercice en cours</title>
+<style>
+/*
+  Screen: Séance — Exercice en cours (états "Essai en cours" et "Essai clos")
+  Governed by:
+  - DESIGN.md: Colors (table-* / ball-* vocabulary reserved to table-diagram; state-success/
+    state-fail reserved to essai outcomes; accent-primary reserved to next-exercise-button),
+    Typography (score-total > score-exercice, tabular nums), Shapes (rounded/full essai-button,
+    rounded/sm fault-button, rounded/md next/replay buttons, rounded/lg score-bar),
+    Components (score-bar, essai-button, fault-button, undo-banner, next-exercise-button,
+    replay-attempt-button, table-diagram).
+  - EXPERIENCE.md: Component Patterns (Essai button, Fault button, Undo banner, Score bar,
+    Next exercise button, Replay attempt button, Table diagram rows), State Patterns
+    ("Essai en cours (mid-séquence)" / "Essai clos (échec ou séquence complète)" rows),
+    Flow 2 / UJ-2 (exercice Argent C, séquence des deux jaunes puis replacement noire).
+*/
+:root{
+  --surface-canvas:#101A15; --surface-raised:#182620; --surface-overlay:#213328;
+  --border-hairline:#2C4034; --ink-primary:#F4F1E8; --ink-secondary:#9BAE9F; --ink-disabled:#556358;
+  --accent-primary:#2A7440; --accent-primary-contrast:#F4F1E8;
+  --state-success:#3FA34D; --state-success-contrast:#0B140F;
+  --state-fail:#C0392B; --state-fail-contrast:#F4F1E8;
+  --table-felt:#154A2E; --table-rail:#3B2417; --table-line:#F4F1E8; --table-arrow:#F4F1E8;
+  --table-order-label:#F4F1E8; --ball-yellow:#E8B93A; --ball-black:#141414; --ball-white:#F5F2E7;
+  --ball-outline:#F4F1E8; --pocket:#0A0A0A;
+  --r-sm:8px; --r-md:14px; --r-lg:20px; --r-full:9999px;
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px; --sp-7:48px;
+  --gutter:16px; --tap-min:48px;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:#3a3a3a;font-family:Roboto,system-ui,-apple-system,sans-serif;padding:32px 16px;}
+.wrap{display:flex;flex-wrap:wrap;gap:32px;justify-content:center;align-items:flex-start;}
+.state-block{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.state-label{color:#e5e5e5;font-size:13px;font-weight:500;letter-spacing:.02em;}
+.device{width:360px;border-radius:40px;background:#050806;padding:12px;}
+.screen{background:var(--surface-canvas);border-radius:30px;overflow:hidden;display:flex;flex-direction:column;height:780px;position:relative;}
+.statusbar{height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.statusbar .notch{width:80px;height:14px;background:#000;border-radius:8px;}
+.content{flex:1;overflow-y:auto;padding:var(--gutter);padding-bottom:112px;}
+.tabbar{height:56px;flex-shrink:0;border-top:1px solid var(--border-hairline);display:flex;background:var(--surface-canvas);position:relative;z-index:1;}
+.tab{flex:1;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-secondary);}
+.tab.active{color:var(--ink-primary);}
+
+.exercise-title{color:var(--ink-primary);font-size:20px;font-weight:600;margin:4px 0 2px;}
+.exercise-meta{color:var(--ink-secondary);font-size:13px;margin:0 0 4px;}
+.exercise-body{color:var(--ink-primary);font-size:16px;line-height:1.4;margin:0 0 var(--sp-4);}
+
+.table-diagram{background:var(--table-rail);border-radius:var(--r-md);padding:8px;margin-bottom:var(--sp-4);}
+.table-diagram svg{display:block;width:100%;height:auto;}
+
+.essai-row{display:flex;gap:var(--sp-4);margin-bottom:var(--sp-3);}
+.essai-btn{width:64px;height:64px;border-radius:var(--r-full);border:1px solid var(--border-hairline);background:var(--surface-raised);color:var(--ink-primary);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;font-weight:500;line-height:1.2;flex-shrink:0;}
+.essai-btn .num{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;}
+.essai-btn .st{font-size:11px;margin-top:2px;}
+.essai-btn.success{background:var(--state-success);color:var(--state-success-contrast);border-color:var(--state-success);}
+.essai-btn.fail{background:var(--state-fail);color:var(--state-fail-contrast);border-color:var(--state-fail);}
+.essai-btn.notreached{opacity:.45;}
+
+.undo-banner{background:var(--surface-overlay);border-radius:var(--r-sm);padding:12px 16px;color:var(--ink-primary);font-size:16px;text-align:center;margin-bottom:var(--sp-3);}
+
+.fault-btn{width:100%;min-height:var(--tap-min);border-radius:var(--r-sm);border:1px solid var(--border-hairline);background:transparent;color:var(--ink-secondary);font-size:13px;font-weight:500;letter-spacing:.03em;text-transform:uppercase;margin-bottom:var(--sp-4);}
+
+.score-bar{position:absolute;left:16px;right:16px;bottom:72px;border-radius:var(--r-lg);background:var(--surface-overlay);padding:var(--sp-4);z-index:1;}
+.score-bar .total{font-size:34px;font-weight:700;color:var(--ink-primary);font-variant-numeric:tabular-nums;line-height:1;}
+.score-bar .seuil{font-size:13px;color:var(--ink-secondary);margin-top:2px;}
+
+.result-panel{background:var(--surface-raised);border:1px solid var(--border-hairline);border-radius:var(--r-md);padding:var(--sp-4);margin-bottom:var(--sp-4);}
+.result-panel .headline{color:var(--ink-primary);font-size:16px;line-height:1.4;margin:0 0 6px;}
+.result-panel .score{font-size:22px;font-weight:600;color:var(--ink-primary);font-variant-numeric:tabular-nums;margin:0;}
+
+.actions-row{display:flex;gap:var(--sp-3);}
+.next-btn{flex:1;min-height:var(--tap-min);border-radius:var(--r-md);background:var(--accent-primary);color:var(--accent-primary-contrast);font-size:16px;font-weight:600;border:none;}
+.replay-btn{flex:1;min-height:var(--tap-min);border-radius:var(--r-md);background:transparent;color:var(--accent-primary);border:1px solid var(--accent-primary);font-size:16px;font-weight:600;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="state-block">
+    <div class="state-label">État A — Essai en cours (mid-séquence)</div>
+    <div class="device">
+      <div class="screen">
+        <div class="statusbar"><div class="notch"></div></div>
+        <div class="content">
+          <div class="exercise-title">Argent — Exercice C</div>
+          <p class="exercise-meta">Essai 1 / 3</p>
+          <p class="exercise-body">Empocher les deux jaunes en séquence, puis se replacer pour jouer la noire.</p>
+
+          <div class="table-diagram">
+            <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg">
+              <rect x="10" y="10" width="480" height="240" rx="10" fill="var(--table-rail)"/>
+              <rect x="30" y="30" width="440" height="200" fill="var(--table-felt)"/>
+              <circle cx="30" cy="30" r="13" fill="var(--pocket)"/>
+              <circle cx="470" cy="30" r="13" fill="var(--pocket)"/>
+              <circle cx="30" cy="230" r="13" fill="var(--pocket)"/>
+              <circle cx="470" cy="230" r="13" fill="var(--pocket)"/>
+              <circle cx="250" cy="30" r="12" fill="var(--pocket)"/>
+              <circle cx="250" cy="230" r="12" fill="var(--pocket)"/>
+
+              <!-- cue ball -->
+              <circle cx="300" cy="185" r="12" fill="var(--ball-white)" stroke="var(--ball-outline)" stroke-width="1.5"/>
+
+              <!-- black ball: 3e bille de la sequence (Argent C = 2 jaunes + noire, cf content-catalog.md) -->
+              <circle cx="380" cy="90" r="12" fill="var(--ball-black)" stroke="var(--ball-outline)" stroke-width="1.5"/>
+              <text x="380" y="115" text-anchor="middle" fill="var(--table-order-label)" font-size="14" font-weight="600">3</text>
+              <line x1="368" y1="82" x2="258" y2="35" stroke="var(--table-arrow)" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+              <!-- yellow ball 1 -->
+              <circle cx="150" cy="120" r="12" fill="var(--ball-yellow)" stroke="var(--ball-outline)" stroke-width="1.5"/>
+              <text x="150" y="145" text-anchor="middle" fill="var(--table-order-label)" font-size="14" font-weight="600">1</text>
+              <line x1="160" y1="112" x2="228" y2="42" stroke="var(--table-arrow)" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+              <!-- yellow ball 2 -->
+              <circle cx="220" cy="150" r="12" fill="var(--ball-yellow)" stroke="var(--ball-outline)" stroke-width="1.5"/>
+              <text x="220" y="175" text-anchor="middle" fill="var(--table-order-label)" font-size="14" font-weight="600">2</text>
+              <line x1="228" y1="138" x2="248" y2="46" stroke="var(--table-arrow)" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+              <defs>
+                <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill="var(--table-arrow)"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+
+          <div class="essai-row">
+            <div class="essai-btn success"><span class="num">Bille 1</span><span class="st">Réussie</span></div>
+            <div class="essai-btn"><span class="num">Bille 2</span><span class="st">Jaune</span></div>
+            <div class="essai-btn"><span class="num">Bille 3</span><span class="st">Noire</span></div>
+          </div>
+
+          <div class="undo-banner">Annuler</div>
+
+          <button class="fault-btn">Faute / fin d'essai</button>
+        </div>
+
+        <div class="score-bar">
+          <div class="total">38/100</div>
+          <div class="seuil">seuil Bronze 50</div>
+        </div>
+
+        <div class="tabbar">
+          <div class="tab active">Séance</div>
+          <div class="tab">Historique</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="state-block">
+    <div class="state-label">État B — Essai clos</div>
+    <div class="device">
+      <div class="screen">
+        <div class="statusbar"><div class="notch"></div></div>
+        <div class="content">
+          <div class="exercise-title">Argent — Exercice C</div>
+          <p class="exercise-meta">Essai 1 / 3 — clos</p>
+          <p class="exercise-body">Empocher les deux jaunes en séquence, puis se replacer pour jouer la noire.</p>
+
+          <div class="essai-row">
+            <div class="essai-btn success"><span class="num">Bille 1</span><span class="st">Réussie</span></div>
+            <div class="essai-btn success"><span class="num">Bille 2</span><span class="st">Réussie</span></div>
+            <div class="essai-btn notreached"><span class="num">Bille 3</span><span class="st">Non tentée</span></div>
+          </div>
+
+          <div class="result-panel">
+            <p class="headline">Essai clos — faute au replacement, avant la tentative sur la noire. 2 billes empochées sur 3.</p>
+            <p class="score">Score de l'essai : 8 pts</p>
+          </div>
+
+          <div class="actions-row">
+            <button class="next-btn">Exercice suivant</button>
+            <button class="replay-btn">Rejouer l'essai</button>
+          </div>
+        </div>
+
+        <div class="score-bar">
+          <div class="total">38/100</div>
+          <div class="seuil">seuil Bronze 50</div>
+        </div>
+
+        <div class="tabbar">
+          <div class="tab active">Séance</div>
+          <div class="tab">Historique</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

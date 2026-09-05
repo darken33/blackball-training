@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Key Screen — Accueil</title>
+<style>
+/*
+  Screen: Accueil (Séance, aucune séance en cours / séance en cours)
+  Governed by:
+  - DESIGN.md: Colors (surface-canvas/raised/overlay, accent-primary, ink-*),
+    Components (level-button, resume-banner), Layout & Spacing (gutter 16, tap-target-min 48,
+    single column), Shapes (rounded/md for level-button, rounded/lg for resume-banner),
+    Elevation & Depth (no drop shadow, hairline border only).
+  - EXPERIENCE.md: Information Architecture (Accueil / Accueil — bandeau reprise rows),
+    Component Patterns (Level button, Resume banner rows), State Patterns
+    ("Accueil, aucune séance en cours" / "Accueil, séance en cours" rows).
+*/
+:root{
+  --surface-canvas:#101A15; --surface-raised:#182620; --surface-overlay:#213328;
+  --border-hairline:#2C4034; --ink-primary:#F4F1E8; --ink-secondary:#9BAE9F; --ink-disabled:#556358;
+  --accent-primary:#2A7440; --accent-primary-contrast:#F4F1E8;
+  --state-success:#3FA34D; --state-success-contrast:#0B140F;
+  --state-fail:#C0392B; --state-fail-contrast:#F4F1E8;
+  --r-sm:8px; --r-md:14px; --r-lg:20px; --r-full:9999px;
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px; --sp-7:48px;
+  --gutter:16px; --tap-min:48px;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:#3a3a3a;font-family:Roboto,system-ui,-apple-system,sans-serif;padding:32px 16px;}
+.wrap{display:flex;flex-wrap:wrap;gap:32px;justify-content:center;align-items:flex-start;}
+.state-block{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.state-label{color:#e5e5e5;font-size:13px;font-weight:500;letter-spacing:.02em;}
+.device{width:360px;border-radius:40px;background:#050806;padding:12px;}
+.screen{background:var(--surface-canvas);border-radius:30px;overflow:hidden;display:flex;flex-direction:column;height:740px;position:relative;}
+.statusbar{height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.statusbar .notch{width:80px;height:14px;background:#000;border-radius:8px;}
+.content{flex:1;overflow-y:auto;padding:var(--gutter);}
+.app-title{color:var(--ink-primary);font-size:20px;font-weight:600;margin:4px 0 20px;}
+.tabbar{height:56px;flex-shrink:0;border-top:1px solid var(--border-hairline);display:flex;background:var(--surface-canvas);}
+.tab{flex:1;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-secondary);}
+.tab.active{color:var(--ink-primary);}
+
+.resume-banner{background:var(--surface-overlay);border-radius:var(--r-lg);padding:var(--sp-4);margin-bottom:var(--sp-5);min-height:var(--tap-min);display:flex;align-items:center;}
+.resume-banner p{margin:0;color:var(--ink-primary);font-size:16px;line-height:1.4;}
+
+.level-btn{width:100%;min-height:var(--tap-min);background:var(--surface-raised);border:1px solid var(--border-hairline);border-radius:var(--r-md);padding:var(--sp-4);margin-bottom:var(--sp-3);text-align:left;display:block;}
+.level-btn .name{color:var(--ink-primary);font-size:20px;font-weight:600;display:block;margin-bottom:2px;}
+.level-btn .meta{color:var(--ink-secondary);font-size:13px;display:block;}
+.level-btn.disabled .name{color:var(--ink-disabled);}
+.level-btn.disabled .meta{color:var(--ink-disabled);}
+.level-btn.current{border-color:var(--accent-primary);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="state-block">
+    <div class="state-label">État A — Accueil, aucune séance en cours</div>
+    <div class="device">
+      <div class="screen">
+        <div class="statusbar"><div class="notch"></div></div>
+        <div class="content">
+          <span class="app-title">Séance</span>
+          <button class="level-btn">
+            <span class="name">Bronze</span>
+            <span class="meta">Seuil 50 / 100 — 20 exercices</span>
+          </button>
+          <button class="level-btn">
+            <span class="name">Argent</span>
+            <span class="meta">Seuil 60 / 100 — 9 exercices</span>
+          </button>
+          <button class="level-btn">
+            <span class="name">Or</span>
+            <span class="meta">Seuil 70 / 100 — 6 exercices</span>
+          </button>
+        </div>
+        <div class="tabbar">
+          <div class="tab active">Séance</div>
+          <div class="tab">Historique</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="state-block">
+    <div class="state-label">État B — Accueil, séance en cours (bandeau reprise)</div>
+    <div class="device">
+      <div class="screen">
+        <div class="statusbar"><div class="notch"></div></div>
+        <div class="content">
+          <span class="app-title">Séance</span>
+          <div class="resume-banner">
+            <p>Reprendre la séance Bronze — exercice 4/20</p>
+          </div>
+          <button class="level-btn current">
+            <span class="name">Bronze</span>
+            <span class="meta">Seuil 50 / 100 — 20 exercices</span>
+          </button>
+          <button class="level-btn disabled">
+            <span class="name">Argent</span>
+            <span class="meta">Seuil 60 / 100 — 9 exercices</span>
+          </button>
+          <button class="level-btn disabled">
+            <span class="name">Or</span>
+            <span class="meta">Seuil 70 / 100 — 6 exercices</span>
+          </button>
+        </div>
+        <div class="tabbar">
+          <div class="tab active">Séance</div>
+          <div class="tab">Historique</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

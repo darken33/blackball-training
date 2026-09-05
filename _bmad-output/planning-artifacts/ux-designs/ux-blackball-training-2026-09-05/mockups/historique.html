@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Key Screen — Historique</title>
+<style>
+/*
+  Screen: Historique — Liste et Historique — Détail
+  Governed by:
+  - DESIGN.md: Components (history-row: date en `meta`, niveau, score-exercice, statut
+    texte+couleur), Typography (meta vs score-exercice), Shapes (rounded/md), Colors
+    (state-success/state-fail jamais seules).
+  - EXPERIENCE.md: Information Architecture ("Historique — Liste" / "Historique — Détail"
+    rows), Component Patterns (History row: tap → détail, aucune édition/suppression),
+    State Patterns ("Historique vide" row, not shown here as a 3rd state — list is populated),
+    FR-9 (liste triée, plus récente en premier), FR-10 (détail par exercice puis par essai),
+    FR-11 (lecture seule).
+*/
+:root{
+  --surface-canvas:#101A15; --surface-raised:#182620; --surface-overlay:#213328;
+  --border-hairline:#2C4034; --ink-primary:#F4F1E8; --ink-secondary:#9BAE9F;
+  --state-success:#3FA34D; --state-success-contrast:#0B140F;
+  --state-fail:#C0392B; --state-fail-contrast:#F4F1E8;
+  --r-sm:8px; --r-md:14px; --r-lg:20px;
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px; --sp-7:48px;
+  --gutter:16px; --tap-min:48px;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:#3a3a3a;font-family:Roboto,system-ui,-apple-system,sans-serif;padding:32px 16px;}
+.wrap{display:flex;flex-wrap:wrap;gap:32px;justify-content:center;align-items:flex-start;}
+.state-block{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.state-label{color:#e5e5e5;font-size:13px;font-weight:500;letter-spacing:.02em;}
+.device{width:360px;border-radius:40px;background:#050806;padding:12px;}
+.screen{background:var(--surface-canvas);border-radius:30px;overflow:hidden;display:flex;flex-direction:column;height:780px;position:relative;}
+.statusbar{height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.statusbar .notch{width:80px;height:14px;background:#000;border-radius:8px;}
+.content{flex:1;overflow-y:auto;padding:var(--gutter);}
+.tabbar{height:56px;flex-shrink:0;border-top:1px solid var(--border-hairline);display:flex;background:var(--surface-canvas);}
+.tab{flex:1;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-secondary);}
+.tab.active{color:var(--ink-primary);}
+.screen-title{color:var(--ink-primary);font-size:20px;font-weight:600;margin:4px 0 20px;display:block;}
+
+/* history-row list */
+.history-list{background:var(--surface-raised);border-radius:var(--r-md);overflow:hidden;}
+.history-row{display:flex;justify-content:space-between;align-items:center;padding:var(--sp-4);border-bottom:1px solid var(--border-hairline);min-height:var(--tap-min);}
+.history-row:last-child{border-bottom:none;}
+.history-row .left .date{color:var(--ink-secondary);font-size:13px;margin:0 0 2px;}
+.history-row .left .niveau{color:var(--ink-primary);font-size:16px;margin:0;}
+.history-row .right{text-align:right;}
+.history-row .right .score{color:var(--ink-primary);font-size:22px;font-weight:600;font-variant-numeric:tabular-nums;margin:0;}
+.history-row .right .status{font-size:13px;margin:2px 0 0;font-weight:500;}
+.status.ok{color:var(--state-success);}
+.status.ko{color:var(--state-fail);}
+
+/* detail */
+.detail-header{color:var(--ink-secondary);font-size:13px;margin:0 0 var(--sp-4);}
+.exercise-list{background:var(--surface-raised);border-radius:var(--r-md);overflow:hidden;margin-bottom:var(--sp-4);}
+.exercise-row{display:flex;justify-content:space-between;align-items:center;padding:var(--sp-4);border-bottom:1px solid var(--border-hairline);min-height:var(--tap-min);}
+.exercise-row .name{color:var(--ink-primary);font-size:16px;}
+.exercise-row .score{color:var(--ink-primary);font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;}
+.exercise-row.expanded{flex-direction:column;align-items:stretch;background:var(--surface-overlay);}
+.expanded-head{display:flex;justify-content:space-between;width:100%;margin-bottom:var(--sp-3);}
+.essai-detail-row{display:flex;justify-content:space-between;padding:var(--sp-2) 0;}
+.essai-detail-row .k{color:var(--ink-secondary);font-size:13px;}
+.essai-detail-row .v{color:var(--ink-primary);font-size:16px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="state-block">
+    <div class="state-label">Historique — Liste</div>
+    <div class="device">
+      <div class="screen">
+        <div class="statusbar"><div class="notch"></div></div>
+        <div class="content">
+          <span class="screen-title">Historique</span>
+          <div class="history-list">
+            <div class="history-row">
+              <div class="left">
+                <p class="date">05/09/2026</p>
+                <p class="niveau">Bronze</p>
+              </div>
+              <div class="right">
+                <p class="score">54/100</p>
+                <p class="status ok">Seuil atteint</p>
+              </div>
+            </div>
+            <div class="history-row">
+              <div class="left">
+                <p class="date">28/08/2026</p>
+                <p class="niveau">Bronze</p>
+              </div>
+              <div class="right">
+                <p class="score">41/100</p>
+                <p class="status ko">Seuil non atteint</p>
+              </div>
+            </div>
+            <div class="history-row">
+              <div class="left">
+                <p class="date">21/08/2026</p>
+                <p class="niveau">Argent</p>
+              </div>
+              <div class="right">
+                <p class="score">62/100</p>
+                <p class="status ok">Seuil atteint</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab">Séance</div>
+          <div class="tab active">Historique</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="state-block">
+    <div class="state-label">Historique — Détail (05/09/2026, Bronze), exercice C1 ouvert</div>
+    <div class="device">
+      <div class="screen">
+        <div class="statusbar"><div class="notch"></div></div>
+        <div class="content">
+          <span class="screen-title">Bronze — 05/09/2026</span>
+          <p class="detail-header">Score total 54/100 — Seuil atteint</p>
+
+          <div class="exercise-list">
+            <div class="exercise-row">
+              <span class="name">Figure A1</span>
+              <span class="score">5 pts</span>
+            </div>
+            <div class="exercise-row">
+              <span class="name">Figure A2</span>
+              <span class="score">3 pts</span>
+            </div>
+            <div class="exercise-row expanded">
+              <div class="expanded-head">
+                <span class="name">Figure C1</span>
+                <span class="score">3 pts</span>
+              </div>
+              <div class="essai-detail-row">
+                <span class="k">Essai 1</span>
+                <span class="v">0/1 bille — raté</span>
+              </div>
+              <div class="essai-detail-row">
+                <span class="k">Essai 2</span>
+                <span class="v">1/1 bille — réussi</span>
+              </div>
+              <div class="essai-detail-row">
+                <span class="k">Essai 3</span>
+                <span class="v">non joué</span>
+              </div>
+            </div>
+            <div class="exercise-row">
+              <span class="name">Figure C2</span>
+              <span class="score">2 pts</span>
+            </div>
+            <div class="exercise-row">
+              <span class="name">Figure C3</span>
+              <span class="score">5 pts</span>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab">Séance</div>
+          <div class="tab active">Historique</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

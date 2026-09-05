@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Key Screen — Résumé de séance</title>
+<style>
+/*
+  Screen: Séance — Résumé (fin de séance)
+  Governed by:
+  - DESIGN.md: Typography (score-total, ~34sp, la plus grande donnée visible), Colors
+    (state-success / state-fail — jamais seules, toujours texte+couleur), Layout & Spacing
+    (colonne unique, gutter 16), Shapes (rounded/lg pour les surfaces qui se distinguent).
+  - EXPERIENCE.md: Information Architecture ("Séance — Résumé" row: confirmer score total,
+    seuil atteint ou non, clôture FR-8), Voice and Tone ("Seuil Bronze atteint — 54/100."),
+    State Patterns ("Dernier exercice du niveau clos" row: total final, statut seuil,
+    séance verrouillée et visible dans l'Historique), Accessibility Floor (jamais couleur seule).
+*/
+:root{
+  --surface-canvas:#101A15; --surface-raised:#182620; --surface-overlay:#213328;
+  --border-hairline:#2C4034; --ink-primary:#F4F1E8; --ink-secondary:#9BAE9F;
+  --state-success:#3FA34D; --state-success-contrast:#0B140F;
+  --r-sm:8px; --r-md:14px; --r-lg:20px;
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px; --sp-6:32px; --sp-7:48px;
+  --gutter:16px; --tap-min:48px;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:#3a3a3a;font-family:Roboto,system-ui,-apple-system,sans-serif;padding:32px 16px;}
+.wrap{display:flex;flex-wrap:wrap;gap:32px;justify-content:center;align-items:flex-start;}
+.state-block{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.state-label{color:#e5e5e5;font-size:13px;font-weight:500;letter-spacing:.02em;}
+.device{width:360px;border-radius:40px;background:#050806;padding:12px;}
+.screen{background:var(--surface-canvas);border-radius:30px;overflow:hidden;display:flex;flex-direction:column;height:740px;position:relative;}
+.statusbar{height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.statusbar .notch{width:80px;height:14px;background:#000;border-radius:8px;}
+.content{flex:1;overflow-y:auto;padding:var(--gutter);}
+.tabbar{height:56px;flex-shrink:0;border-top:1px solid var(--border-hairline);display:flex;background:var(--surface-canvas);}
+.tab{flex:1;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-secondary);}
+.tab.active{color:var(--ink-primary);}
+
+.screen-title{color:var(--ink-primary);font-size:20px;font-weight:600;margin:4px 0 20px;}
+.level-meta{color:var(--ink-secondary);font-size:13px;margin:0 0 4px;text-transform:uppercase;letter-spacing:.03em;font-weight:500;}
+
+.total-card{background:var(--surface-raised);border:1px solid var(--border-hairline);border-radius:var(--r-lg);padding:var(--sp-5);margin-bottom:var(--sp-4);text-align:center;}
+.total-card .label{color:var(--ink-secondary);font-size:13px;margin:0 0 var(--sp-2);}
+.total-card .total{color:var(--ink-primary);font-size:34px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1;margin:0;}
+
+.status-chip{border-radius:var(--r-md);padding:var(--sp-4);margin-bottom:var(--sp-4);display:flex;align-items:center;gap:10px;border:1px solid var(--state-success);background:rgba(63,163,77,0.16);}
+.status-chip .mark{width:22px;height:22px;border-radius:50%;background:var(--state-success);color:var(--state-success-contrast);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
+.status-chip p{margin:0;color:var(--ink-primary);font-size:16px;font-weight:600;}
+
+.detail-row{display:flex;justify-content:space-between;padding:var(--sp-3) 0;border-bottom:1px solid var(--border-hairline);}
+.detail-row:last-child{border-bottom:none;}
+.detail-row .k{color:var(--ink-secondary);font-size:13px;}
+.detail-row .v{color:var(--ink-primary);font-size:16px;}
+
+.lock-note{color:var(--ink-secondary);font-size:13px;margin-top:var(--sp-4);line-height:1.4;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="state-block">
+    <div class="state-label">Résumé de séance — seuil atteint (exemple Bronze)</div>
+    <div class="device">
+      <div class="screen">
+        <div class="statusbar"><div class="notch"></div></div>
+        <div class="content">
+          <span class="screen-title">Résumé de séance</span>
+          <p class="level-meta">Bronze — 20 exercices</p>
+
+          <div class="total-card">
+            <p class="label">Score total</p>
+            <p class="total">54/100</p>
+          </div>
+
+          <div class="status-chip">
+            <div class="mark">✓</div>
+            <p>Seuil Bronze atteint — 54/100.</p>
+          </div>
+
+          <div class="detail-row">
+            <span class="k">Seuil du niveau</span>
+            <span class="v">50/100</span>
+          </div>
+          <div class="detail-row">
+            <span class="k">Date</span>
+            <span class="v">05/09/2026</span>
+          </div>
+
+          <p class="lock-note">Séance clôturée — verrouillée. Visible immédiatement dans l'Historique.</p>
+        </div>
+        <div class="tabbar">
+          <div class="tab active">Séance</div>
+          <div class="tab">Historique</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

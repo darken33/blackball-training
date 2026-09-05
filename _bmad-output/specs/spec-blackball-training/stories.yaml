@@ -1,0 +1,37 @@
+- id: "1"
+  title: Socle hors-ligne applicatif
+  description: >-
+    Scaffold Vite/React avec PWA installable, service worker mettant en cache
+    tous les assets, manifest aligné sur le sous-chemin GitHub Pages, et pipeline
+    GitHub Actions build+déploiement. Prépare la contrainte 100% hors-ligne
+    (SPEC.md Constraints, ARCHITECTURE-SPINE.md AD-7) avant toute fonctionnalité.
+- id: "2"
+  title: Catalogue de contenu D.F.A.
+  description: >-
+    Implémente CAP-1 : les 35 exercices (Bronze/Argent/Or) en données de grille
+    fidèles à content-catalog.md, et le rendu du schéma officiel (table-diagram)
+    pour chaque exercice. Consultation seule, aucune saisie ni score à ce stade.
+- id: "3"
+  title: Moteur de notation
+  description: >-
+    Implémente le cœur de CAP-2 : fonctions pures domain/scoring (score d'essai,
+    meilleur essai retenu, total) conformes au barème par niveau, validées sur
+    les deux exemples officiels chiffrés du règlement. Aucune UI ni persistance.
+- id: "4"
+  title: Persistance de séance
+  description: >-
+    Implémente le contrat repository (adapters/persistence) : écriture
+    incrémentale par essai, immutabilité post-clôture, abandon = suppression
+    complète d'une session non close. Support pour CAP-4, base pour CAP-5.
+- id: "5"
+  title: Parcours de séance
+  description: >-
+    Assemble CAP-2 (saisie à une main), CAP-3 (total en continu vs seuil) et
+    CAP-4 (clôture/verrouillage) en un parcours de séance complet, orchestré
+    par application/session sur les stories 2, 3 et 4.
+- id: "6"
+  title: Historique en lecture seule
+  description: >-
+    Implémente CAP-5 : liste des séances clôturées triée par date, et détail
+    par exercice/essai, entièrement en lecture seule. S'appuie sur le
+    repository de la story 4.
