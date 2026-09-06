@@ -6,6 +6,7 @@ import { Exercice } from './exercice/Exercice'
 import { ScoreBar } from './exercice/ScoreBar'
 import { Resume } from './resume/Resume'
 import { Historique } from './historique/Historique'
+import { SplashScreen } from './splash/SplashScreen'
 
 // Shell de navigation a 2 onglets (Seance/Historique, EXPERIENCE.md) — remplace le harnais
 // temporaire FR-1/FR-2. Assemble les 3 ecrans de la Seance (Accueil/Exercice/Resume) au-dessus
@@ -19,6 +20,8 @@ function App() {
 
   return (
     <div className="app-shell">
+      <SplashScreen />
+
       <main className="app-content">
         {onglet === 'historique' && <Historique />}
 

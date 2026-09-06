@@ -32,7 +32,7 @@ export default defineConfig({
       },
       workbox: {
         // Precache tous les assets buildes pour une disponibilite 100% hors-ligne.
-        globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,jpg,ico,webmanifest}'],
       },
     }),
   ],
