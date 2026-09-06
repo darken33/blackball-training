@@ -10,7 +10,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "verify-catalog": "node --experimental-strip-types scripts/verify-catalog.mjs"
+    "verify-catalog": "node --experimental-strip-types scripts/verify-catalog.mjs",
+    "verify-scoring": "node --experimental-strip-types scripts/verify-scoring.mjs"
   },
   "dependencies": {
     "react": "19.2.8",
