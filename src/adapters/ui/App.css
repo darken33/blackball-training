@@ -2,45 +2,48 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background: var(--surface-canvas);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.chargement {
+  padding: var(--gutter);
+  color: var(--ink-secondary);
+}
+
+.score-bar-wrapper {
+  padding: 0 var(--gutter) var(--sp-4);
+  flex-shrink: 0;
+}
+
+.tabbar {
+  height: 56px;
+  flex-shrink: 0;
+  border-top: 1px solid var(--border-hairline);
+  display: flex;
+  background: var(--surface-canvas);
+}
+
+.tab {
+  flex: 1;
+  display: flex;
   align-items: center;
-  gap: 16px;
-  text-align: center;
-  font-family: system-ui, sans-serif;
-  padding: 24px 16px 48px;
-}
-
-.harnais-niveaux,
-.harnais-exercices {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
   justify-content: center;
-}
-
-.harnais-niveau,
-.harnais-exercice {
-  border: 1px solid #888;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-secondary);
   background: transparent;
-  border-radius: 8px;
-  padding: 6px 12px;
-  cursor: pointer;
-  text-transform: capitalize;
+  border: none;
 }
 
-.harnais-niveau.actif,
-.harnais-exercice.actif {
-  background: #2a7440;
-  color: #f4f1e8;
-  border-color: #2a7440;
-}
-
-.harnais-schema {
-  width: min(480px, 100%);
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.harnais-enonce {
-  margin: 0;
+.tab.active {
+  color: var(--ink-primary);
 }

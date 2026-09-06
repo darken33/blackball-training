@@ -4,3 +4,6 @@
 - source_spec: none
   summary: Parcours de séance (FR-3, FR-4, FR-8) — choix du niveau, saisie d'essai à une main (adapters/ui/exercice), orchestration de session (application/session) et persistance incrémentale par essai (adapters/persistence, Dexie/IndexedDB) — déféré derrière le moteur de notation (domain/scoring, FR-5/6/7) que ce parcours consomme.
   evidence: Découpage choisi par l'utilisateur (2026-09-06) pour livrer le moteur de notation seul d'abord, testable en isolation (AD-6, sans UI ni persistance), avant la brique bien plus grosse Dexie+écran qui en dépend.
+- source_spec: `_bmad-output/implementation-artifacts/spec-parcours-de-seance.md`
+  summary: 36 fichiers binaires non suivis `gfx/base/*.png` et `gfx/style/*.png` (plus deux variantes `bronze-A-officiel.png`/`bronze-A-style.png`) traînent dans l'arbre de travail, ne sont référencés par aucun fichier de `src/` et semblent appartenir à un travail en cours sans rapport avec cette spec.
+  evidence: Revue par la couche blind-hunter (grep confirmé : aucun import/chemin vers ces fichiers dans `.ts`/`.tsx`/`.css`/`vite.config.ts`/`index.html`) ; ces fichiers étaient déjà non suivis dans l'arbre de travail avant le début de cette session (décision humaine du 2026-09-06 : les laisser tels quels plutôt que de les committer ou les supprimer).

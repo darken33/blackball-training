@@ -1,0 +1,127 @@
+.resume {
+  padding: var(--gutter);
+  padding-bottom: var(--sp-6);
+}
+
+.screen-title {
+  color: var(--ink-primary);
+  font-size: 20px;
+  font-weight: 600;
+  display: block;
+  margin: 4px 0 20px;
+}
+
+.level-meta {
+  color: var(--ink-secondary);
+  font-size: 13px;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 500;
+}
+
+.total-card {
+  background: var(--surface-raised);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--r-lg);
+  padding: var(--sp-5);
+  margin-bottom: var(--sp-4);
+  text-align: center;
+}
+
+.total-card .label {
+  color: var(--ink-secondary);
+  font-size: 13px;
+  margin: 0 0 var(--sp-2);
+}
+
+.total-card .total {
+  color: var(--ink-primary);
+  font-size: 34px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin: 0;
+}
+
+.status-chip {
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-4);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--state-success);
+  background: rgba(63, 163, 77, 0.16);
+}
+
+.status-chip.fail {
+  border-color: var(--state-fail);
+  background: rgba(192, 57, 43, 0.16);
+}
+
+.status-chip .mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--state-success);
+  color: var(--state-success-contrast);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.status-chip.fail .mark {
+  background: var(--state-fail);
+  color: var(--state-fail-contrast);
+}
+
+.status-chip p {
+  margin: 0;
+  color: var(--ink-primary);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.detail-row:last-of-type {
+  border-bottom: none;
+}
+
+.detail-row .k {
+  color: var(--ink-secondary);
+  font-size: 13px;
+}
+
+.detail-row .v {
+  color: var(--ink-primary);
+  font-size: 16px;
+}
+
+.lock-note {
+  color: var(--ink-secondary);
+  font-size: 13px;
+  margin-top: var(--sp-4);
+  line-height: 1.4;
+}
+
+.retour-btn {
+  width: 100%;
+  min-height: var(--tap-min);
+  border-radius: var(--r-md);
+  background: var(--accent-primary);
+  color: var(--accent-primary-contrast);
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  margin-top: var(--sp-5);
+}

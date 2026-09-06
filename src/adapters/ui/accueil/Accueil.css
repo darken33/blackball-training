@@ -1,0 +1,79 @@
+.accueil {
+  padding: var(--gutter);
+  padding-bottom: var(--sp-6);
+}
+
+.app-title {
+  color: var(--ink-primary);
+  font-size: 20px;
+  font-weight: 600;
+  margin: 4px 0 20px;
+}
+
+.resume-banner {
+  width: 100%;
+  text-align: left;
+  background: var(--surface-overlay);
+  border: none;
+  border-radius: var(--r-lg);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-5);
+  min-height: var(--tap-min);
+  display: flex;
+  align-items: center;
+}
+
+.resume-banner p {
+  margin: 0;
+  color: var(--ink-primary);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.level-btn {
+  width: 100%;
+  min-height: var(--tap-min);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-3);
+  text-align: left;
+  display: block;
+}
+
+.level-btn .name {
+  color: var(--ink-primary);
+  font-size: 20px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.level-btn .meta {
+  color: var(--ink-secondary);
+  font-size: 13px;
+  display: block;
+}
+
+.level-btn.disabled .name,
+.level-btn.disabled .meta {
+  color: var(--ink-disabled);
+}
+
+.level-btn.current {
+  border-color: var(--accent-primary);
+}
+
+.accueil-abandon-link {
+  width: 100%;
+  min-height: var(--tap-min);
+  background: transparent;
+  border: none;
+  color: var(--ink-secondary);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-top: var(--sp-2);
+}

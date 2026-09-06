@@ -1,5 +1,35 @@
 :root {
-  color-scheme: light dark;
+  color-scheme: dark;
+
+  /* Tokens generaux (DESIGN.md) — repris tels quels des mockups, pas de mode clair (v1). */
+  --surface-canvas: #101a15;
+  --surface-raised: #182620;
+  --surface-overlay: #213328;
+  --border-hairline: #2c4034;
+  --ink-primary: #f4f1e8;
+  --ink-secondary: #9bae9f;
+  --ink-disabled: #556358;
+  --accent-primary: #2a7440;
+  --accent-primary-contrast: #f4f1e8;
+  --state-success: #3fa34d;
+  --state-success-contrast: #0b140f;
+  --state-fail: #c0392b;
+  --state-fail-contrast: #f4f1e8;
+
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-full: 9999px;
+
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --gutter: 16px;
+  --tap-min: 48px;
 
   /* Vocabulaire reserve au composant table-diagram (DESIGN.md) — jamais migre vers l'UI generale. */
   --table-felt: #154a2e;
@@ -20,6 +50,19 @@
   box-sizing: border-box;
 }
 
+html,
+body,
+#root {
+  height: 100%;
+}
+
 body {
   margin: 0;
+  background: var(--surface-canvas);
+  color: var(--ink-primary);
+  font-family: Roboto, system-ui, -apple-system, sans-serif;
+}
+
+button {
+  font-family: inherit;
 }

@@ -1,0 +1,19 @@
+.score-bar {
+  border-radius: var(--r-lg);
+  background: var(--surface-overlay);
+  padding: var(--sp-4);
+}
+
+.score-bar .total {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--ink-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.score-bar .seuil {
+  font-size: 13px;
+  color: var(--ink-secondary);
+  margin-top: 2px;
+}
