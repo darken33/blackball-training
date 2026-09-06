@@ -2,3 +2,8 @@
 .bmad-loop/cache/
 .bmad-loop/policy.toml
 _bmad/render/
+
+node_modules/
+dist/
+.DS_Store
+*.local
