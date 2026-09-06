@@ -1,0 +1,3 @@
+- source_spec: `_bmad-output/implementation-artifacts/spec-catalogue-contenu-dfa.md`
+  summary: `content-catalog.md` §2 contains a stale generalization claiming "quantité de bille" callouts only exist on Argent A/B/C, but §5's own per-exercise list (and the shipped `domain/catalog` data) show them on Argent E/F/G/H/I too — only Argent D lacks one.
+  evidence: Pre-existing inconsistency, present before this session's corrections and not touched by them (only Or A/B/E and Bronze B1/C1/C2/F3 were corrected this pass). Confirmed by re-reading content-catalog.md §5's own Argent list, which assigns a quantité de bille to every Argent exercise except D.

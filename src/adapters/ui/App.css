@@ -1,8 +1,46 @@
 .app-shell {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 16px;
   text-align: center;
   font-family: system-ui, sans-serif;
+  padding: 24px 16px 48px;
+}
+
+.harnais-niveaux,
+.harnais-exercices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.harnais-niveau,
+.harnais-exercice {
+  border: 1px solid #888;
+  background: transparent;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.harnais-niveau.actif,
+.harnais-exercice.actif {
+  background: #2a7440;
+  color: #f4f1e8;
+  border-color: #2a7440;
+}
+
+.harnais-schema {
+  width: min(480px, 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.harnais-enonce {
+  margin: 0;
 }

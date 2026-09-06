@@ -1,0 +1,11 @@
+.table-diagram {
+  background: var(--table-rail);
+  border-radius: 12px;
+  padding: 8px;
+}
+
+.table-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
