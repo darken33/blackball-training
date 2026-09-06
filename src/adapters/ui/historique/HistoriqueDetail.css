@@ -1,0 +1,96 @@
+.historique-detail {
+  padding: var(--gutter);
+  padding-bottom: var(--sp-6);
+}
+
+.screen-title {
+  color: var(--ink-primary);
+  font-size: 20px;
+  font-weight: 600;
+  display: block;
+  margin: 4px 0 20px;
+}
+
+.detail-header {
+  color: var(--ink-secondary);
+  font-size: 13px;
+  margin: 0 0 var(--sp-4);
+}
+
+/* exercise-row accordeon (mockups/historique.html) */
+.exercise-list {
+  background: var(--surface-raised);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  margin-bottom: var(--sp-4);
+}
+
+.exercise-row {
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.exercise-row:last-child {
+  border-bottom: none;
+}
+
+.exercise-row.expanded {
+  background: var(--surface-overlay);
+}
+
+.expanded-head {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--sp-4);
+  min-height: var(--tap-min);
+  border: none;
+  background: transparent;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+}
+
+.expanded-head .name {
+  color: var(--ink-primary);
+  font-size: 16px;
+}
+
+.expanded-head .score {
+  color: var(--ink-primary);
+  font-size: 16px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.essai-detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--sp-2) var(--sp-4);
+}
+
+.exercise-row.expanded .essai-detail-row:last-child {
+  padding-bottom: var(--sp-3);
+}
+
+.essai-detail-row .k {
+  color: var(--ink-secondary);
+  font-size: 13px;
+}
+
+.essai-detail-row .v {
+  color: var(--ink-primary);
+  font-size: 16px;
+}
+
+.retour-btn {
+  width: 100%;
+  min-height: var(--tap-min);
+  border-radius: var(--r-md);
+  background: var(--accent-primary);
+  color: var(--accent-primary-contrast);
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  margin-top: var(--sp-5);
+}

@@ -4,7 +4,7 @@
 // aucune nouvelle dependance. Usage : npm run verify-catalog
 
 import assert from 'node:assert/strict'
-import { listerNiveaux, listerExercices, getFigure } from '../src/domain/catalog/index.ts'
+import { listerNiveaux, listerExercices, getFigure, formatNomFigure } from '../src/domain/catalog/index.ts'
 
 const VALEUR_PREMIER_ESSAI = { bronze: 5, argent: 4, or: 4 }
 
@@ -68,6 +68,11 @@ try {
     const total = somme * VALEUR_PREMIER_ESSAI[niveau]
     assert.equal(total, 100, `${niveau} : total attendu 100 (obtenu ${total} = ${somme} billes x ${VALEUR_PREMIER_ESSAI[niveau]})`)
   }
+
+  // formatNomFigure (Historique, FR-9/FR-10) : numero seulement en Bronze.
+  assert.equal(formatNomFigure('bronze', 'bronze-a-2'), 'Figure A2', 'Bronze conserve le numero')
+  assert.equal(formatNomFigure('argent', 'argent-a-1'), 'Figure A', 'Argent omet le numero')
+  assert.equal(formatNomFigure('or', 'or-c-1'), 'Figure C', 'Or omet le numero')
 
   console.log('verify-catalog: OK (35 exercices, Bronze 20x1 bille, totaux Bronze/Argent/Or = 100/100/100).')
 } catch (error) {

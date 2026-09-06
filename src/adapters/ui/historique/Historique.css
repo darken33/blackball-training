@@ -1,5 +1,9 @@
 .historique {
   padding: var(--gutter);
+  padding-bottom: var(--sp-6);
+}
+
+.historique.historique-empty {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,4 +14,80 @@
   color: var(--ink-secondary);
   font-size: 16px;
   text-align: center;
+}
+
+.screen-title {
+  color: var(--ink-primary);
+  font-size: 20px;
+  font-weight: 600;
+  display: block;
+  margin: 4px 0 20px;
+}
+
+/* history-row list (mockups/historique.html) */
+.history-list {
+  background: var(--surface-raised);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.history-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--sp-4);
+  min-height: var(--tap-min);
+  border: none;
+  border-bottom: 1px solid var(--border-hairline);
+  background: transparent;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+}
+
+.history-row:last-child {
+  border-bottom: none;
+}
+
+.history-row .left .date {
+  display: block;
+  color: var(--ink-secondary);
+  font-size: 13px;
+  margin: 0 0 2px;
+}
+
+.history-row .left .niveau {
+  display: block;
+  color: var(--ink-primary);
+  font-size: 16px;
+  margin: 0;
+}
+
+.history-row .right {
+  text-align: right;
+}
+
+.history-row .right .score {
+  display: block;
+  color: var(--ink-primary);
+  font-size: 22px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+
+.history-row .right .status {
+  display: block;
+  font-size: 13px;
+  margin: 2px 0 0;
+  font-weight: 500;
+}
+
+.status.ok {
+  color: var(--state-success);
+}
+
+.status.ko {
+  color: var(--state-fail);
 }
