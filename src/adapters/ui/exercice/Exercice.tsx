@@ -66,7 +66,7 @@ export function Exercice({
       </p>
       <p className="exercise-body">{exercice.enonce}</p>
 
-      <TableDiagram figure={figure} exercice={exercice} />
+      <TableDiagram figure={figure} />
 
       <EssaiButtons exercice={exercice} figure={figure} essaiCourant={essaiCourant} onTapBille={onTapBille} />
 

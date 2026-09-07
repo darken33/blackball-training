@@ -31,19 +31,9 @@
   --gutter: 16px;
   --tap-min: 48px;
 
-  /* Vocabulaire reserve au composant table-diagram (DESIGN.md) — jamais migre vers l'UI generale. */
-  --table-felt: #154a2e;
+  /* table-diagram affiche desormais l'image officielle (src/assets/schemas/), plus un rendu
+     vectoriel — seul le cadre reste vectoriel. */
   --table-rail: #3b2417;
-  --table-line: #f4f1e8;
-  --table-arrow: #f4f1e8;
-  --table-order-label: #f4f1e8;
-  --table-replacement-zone: #e8b93a;
-  --ball-red: #c1272d;
-  --ball-yellow: #e8b93a;
-  --ball-black: #141414;
-  --ball-white: #f5f2e7;
-  --ball-outline: #f4f1e8;
-  --pocket: #0a0a0a;
 }
 
 * {

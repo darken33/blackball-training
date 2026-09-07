@@ -4,8 +4,9 @@
   padding: 8px;
 }
 
-.table-diagram svg {
+.table-diagram img {
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 970 / 548;
 }

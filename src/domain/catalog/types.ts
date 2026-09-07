@@ -16,13 +16,19 @@ export type Pocket =
 
 export interface Bille {
   couleur: Couleur
-  /** Position en pourcentage de la surface de jeu, 0-100 (0 = bande gauche/haute). */
+  /**
+   * Position en pourcentage de la surface de jeu, 0-100 (0 = bande gauche/haute).
+   * Non consommee par le rendu depuis spec-schemas-officiels.md (2026-09-07, TableDiagram
+   * affiche l'image officielle de la Figure) -- conservee pour reference/usage futur eventuel,
+   * jamais lue par EssaiButtons (qui ne lit que `couleur`).
+   */
   x: number
   y: number
   /**
    * Poche visee par cette bille. Bronze uniquement : chaque bille d'une Figure Bronze
    * porte sa propre fleche+poche cible dans le schema source, identique quel que soit
    * l'exercice sibling affiche (AD-2, cf Design Notes "Aucune fleche... Argent ni Or").
+   * Non consommee par le rendu depuis spec-schemas-officiels.md — meme statut que x/y.
    */
   pocheCible?: Pocket
 }

@@ -4,7 +4,11 @@
 // aucune nouvelle dependance. Usage : npm run verify-catalog
 
 import assert from 'node:assert/strict'
+import { existsSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { listerNiveaux, listerExercices, getFigure, formatNomFigure } from '../src/domain/catalog/index.ts'
+
+const SCHEMAS_DIR = fileURLToPath(new URL('../src/assets/schemas/', import.meta.url))
 
 const VALEUR_PREMIER_ESSAI = { bronze: 5, argent: 4, or: 4 }
 
@@ -67,6 +71,18 @@ try {
     const somme = listerExercices(niveau).reduce((acc, exercice) => acc + exercice.nombreBillesSequence, 0)
     const total = somme * VALEUR_PREMIER_ESSAI[niveau]
     assert.equal(total, 100, `${niveau} : total attendu 100 (obtenu ${total} = ${somme} billes x ${VALEUR_PREMIER_ESSAI[niveau]})`)
+  }
+
+  // Chaque Figure a son image officielle (src/assets/schemas/{id}.png, TableDiagram) — une
+  // Figure sans asset se rendrait silencieusement en boite vide, sans avertissement (revue
+  // spec-schemas-officiels.md).
+  for (const niveau of listerNiveaux()) {
+    for (const figure of figuresDuNiveau(niveau)) {
+      assert.ok(
+        existsSync(`${SCHEMAS_DIR}${figure.id}.png`),
+        `${figure.id} : image manquante dans src/assets/schemas/ (TableDiagram afficherait une boite vide)`,
+      )
+    }
   }
 
   // formatNomFigure (Historique, FR-9/FR-10) : numero seulement en Bronze.
