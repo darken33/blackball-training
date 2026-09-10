@@ -72,6 +72,20 @@ function essaiEstClos(essai: EssaiJoue, exercice: Exercice): boolean {
   return essai.faute || essai.billesEmpochees >= exercice.nombreBillesSequence
 }
 
+/**
+ * Meilleur score encore atteignable au PROCHAIN essai (le bareme baisse avec l'index : 1er
+ * essai > 2e > 3e) -- jamais celui de l'essai 1, sinon un succes complet obtenu a l'essai 2/3
+ * reste toujours sous ce plafond fige et le rejeu resterait propose alors qu'il ne peut plus
+ * rien ameliorer (bug corrige ici). `null` si les 3 essais sont deja joues : aucun prochain
+ * essai n'existe, donc rejouer ne peut jamais ameliorer le score retenu. Source unique pour
+ * `peutRejouer` (exerciceEnCours) et le garde-fou de `rejouerEssai` -- la meme logique dupliquee
+ * aux deux endroits est la cause racine du bug.
+ */
+function plafondProchainEssai(niveau: Niveau, essaisJoues: number, nombreBillesSequence: number): number | null {
+  if (essaisJoues >= 3) return null
+  return calculerScoreEssai(niveau, (essaisJoues + 1) as 1 | 2 | 3, nombreBillesSequence)
+}
+
 function versAffichage(essai: EssaiJoue, niveau: Niveau, exercice: Exercice): EssaiAffichage {
   return {
     ...essai,
@@ -280,8 +294,8 @@ export function useSession(): UseSessionResult {
     const dernier = sessionActive.essaisCourant[sessionActive.essaisCourant.length - 1]
     if (!dernier || !essaiEstClos(dernier, exercice)) return
     const meilleur = calculerScoreExercice(sessionActive.niveau, sessionActive.essaisCourant)
-    const maximum = calculerScoreEssai(sessionActive.niveau, 1, exercice.nombreBillesSequence)
-    if (meilleur >= maximum) return
+    const maximum = plafondProchainEssai(sessionActive.niveau, sessionActive.essaisCourant.length, exercice.nombreBillesSequence)
+    if (maximum === null || meilleur >= maximum) return
     const nouveau: EssaiJoue = { index: (sessionActive.essaisCourant.length + 1) as 1 | 2 | 3, billesEmpochees: 0, faute: false }
     repository
       .enregistrerEssai(sessionActive.sessionId, exercice.id, nouveau)
@@ -369,7 +383,7 @@ export function useSession(): UseSessionResult {
     if (!dernier) return undefined
     const essaiCourant = versAffichage(dernier, sessionActive.niveau, exercice)
     const scoreExerciceRetenu = calculerScoreExercice(sessionActive.niveau, sessionActive.essaisCourant)
-    const maximum = calculerScoreEssai(sessionActive.niveau, 1, exercice.nombreBillesSequence)
+    const maximum = plafondProchainEssai(sessionActive.niveau, sessionActive.essaisCourant.length, exercice.nombreBillesSequence)
     return {
       exercice,
       figure,
@@ -380,7 +394,7 @@ export function useSession(): UseSessionResult {
       essaiClos: essaiCourant.clos,
       nombreEssaisJoues: sessionActive.essaisCourant.length,
       scoreExerciceRetenu,
-      peutRejouer: essaiCourant.clos && sessionActive.essaisCourant.length < 3 && scoreExerciceRetenu < maximum,
+      peutRejouer: essaiCourant.clos && maximum !== null && scoreExerciceRetenu < maximum,
       scoreTotal: calculerScoreTotal(sessionActive.scoresCommis),
       seuil: getSeuil(sessionActive.niveau),
     }
