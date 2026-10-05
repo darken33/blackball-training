@@ -5,6 +5,7 @@
   background: var(--surface-canvas);
   max-width: 480px;
   margin: 0 auto;
+  position: relative;
 }
 
 .app-content {

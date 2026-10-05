@@ -1,7 +1,7 @@
 {
   "name": "blackball-training",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.1.0",
   "type": "module",
   "engines": {
     "node": ">=22"
@@ -12,7 +12,8 @@
     "preview": "vite preview",
     "verify-catalog": "node --experimental-strip-types scripts/verify-catalog.mjs",
     "verify-scoring": "node --experimental-strip-types scripts/verify-scoring.mjs",
-    "verify-historique": "node --experimental-strip-types scripts/verify-historique.mjs"
+    "verify-historique": "node --experimental-strip-types scripts/verify-historique.mjs",
+    "verify-stats": "node --experimental-strip-types scripts/verify-stats.mjs"
   },
   "dependencies": {
     "dexie": "^4.4.5",

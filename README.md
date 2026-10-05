@@ -7,6 +7,7 @@ Application mobile (PWA, 100% hors-ligne) pour s'entraîner seul aux Diplômes F
 - **Catalogue officiel** des 3 niveaux (35 exercices), schémas fidèles au règlement.
 - **Parcours de séance** à niveau fixe : saisie d'essai à une main, score calculé en continu, comparé au seuil du diplôme visé.
 - **Historique** des séances passées, en lecture seule (liste + détail par exercice/essai).
+- **Stats d'entraînement** : courbe de progression et exercices les plus difficiles (5 par niveau), calculés sur les 10 dernières séances, plus la liste des exercices encore jamais joués — pour choisir quoi travailler.
 - **Hors-ligne total** : toutes les données restent sur l'appareil (aucun compte, aucun cloud), utilisable sans réseau une fois installée.
 
 ## Installer l'application sur mobile
@@ -48,7 +49,12 @@ Le projet n'a pas de framework de test — la logique pure (`domain/`) est couve
 npm run verify-catalog     # catalogue des 35 exercices
 npm run verify-scoring     # moteur de notation
 npm run verify-historique  # dérivation de l'historique
+npm run verify-stats       # dérivation des statistiques d'entraînement
 ```
+
+## Versions
+
+Le numéro de version (SemVer) a pour source unique le champ `version` de `package.json` ; il est injecté à la build et affiché en haut à droite des écrans de l'application. Chaque version est taguée `vX.Y.Z` dans Git. L'historique des changements est dans [CHANGELOG.md](CHANGELOG.md).
 
 ## Stack technique
 

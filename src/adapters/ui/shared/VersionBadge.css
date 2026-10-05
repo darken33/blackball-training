@@ -1,0 +1,11 @@
+.version-badge {
+  position: absolute;
+  top: calc(var(--gutter) + 10px);
+  right: var(--gutter);
+  z-index: 1;
+  pointer-events: none;
+  color: var(--ink-secondary);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.6;
+}

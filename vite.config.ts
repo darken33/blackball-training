@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
+import pkg from './package.json' with { type: 'json' }
 
 // Chemin de deploiement reel (sous-chemin GitHub Pages du repo darken33/blackball-training).
 // AD-7 : start_url/scope du manifest PWA doivent en deriver, jamais etre codes en dur
@@ -10,6 +11,8 @@ const base = '/blackball-training/'
 // https://vite.dev/config/
 export default defineConfig({
   base,
+  // Version de l'app : source unique = package.json, injectee a la build (affichee sur l'accueil).
+  define: { __APP_VERSION__: JSON.stringify(pkg.version) },
   plugins: [
     react(),
     VitePWA({
