@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Code Review Crew — blackball-stats</title>
+<style>
+  :root{
+    --bg:#10241c; --felt:#14382a; --felt2:#0d2a20; --ink:#f2efe6; --muted:#a9b8ae;
+    --card:#1b4a37; --line:#2f6b52; --gold:#e8c468; --red:#e5645a; --blue:#6ab0e6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(ellipse at 50% 0%,var(--felt) 0%,var(--bg) 70%) fixed;color:var(--ink);
+    font:17px/1.55 Georgia,"Times New Roman",serif;padding:0 16px 80px}
+  main{max-width:760px;margin:0 auto}
+  header{text-align:center;padding:56px 0 24px;position:relative}
+  header h1{font-size:2.1rem;margin:.2em 0 .1em;letter-spacing:.02em}
+  header p{color:var(--muted);margin:.2em 0}
+  .badge{display:inline-block;border:1px solid var(--gold);color:var(--gold);padding:2px 12px;border-radius:99px;
+    font:600 .85rem system-ui,sans-serif;letter-spacing:.08em}
+  .table{width:100%;max-width:520px;margin:12px auto 0;display:block}
+  .ball{animation:roll 7s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+  .b2{animation-delay:-2s;animation-duration:9s}.b3{animation-delay:-4s;animation-duration:8s}
+  @keyframes roll{0%,100%{transform:translate(0,0)}50%{transform:translate(14px,-6px)}}
+  @media (prefers-reduced-motion:reduce){.ball{animation:none}}
+  h2{font-size:1.15rem;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin:48px 0 14px;
+    font-family:system-ui,sans-serif;border-bottom:1px solid var(--line);padding-bottom:6px}
+  .cast{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px}
+  .who{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 10px;text-align:center}
+  .who .i{font-size:1.8rem}.who b{display:block}.who small{color:var(--muted);font-family:system-ui,sans-serif}
+  .chat{display:flex;flex-direction:column;gap:12px}
+  .m{display:flex;gap:10px;align-items:flex-start;max-width:92%}
+  .m .i{font-size:1.6rem;line-height:1.2}
+  .m .t{background:var(--card);border:1px solid var(--line);border-radius:4px 14px 14px 14px;padding:8px 14px}
+  .m .t b{font:700 .8rem system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;display:block;margin-bottom:2px}
+  .grumbal b{color:var(--red)}.vex b{color:var(--blue)}.dana b{color:var(--gold)}
+  .boundary b{color:#f0a05a}.yui b{color:#8fd9a8}
+  .m.me{align-self:flex-end;flex-direction:row-reverse}
+  .m.me .t{background:#3b3320;border-color:var(--gold);border-radius:14px 4px 14px 14px}
+  .m.me b{color:var(--gold)}
+  .finds{display:grid;gap:10px}
+  .f{display:flex;gap:12px;background:var(--felt2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .f .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--gold);color:#222;
+    font:700 .95rem system-ui,sans-serif;display:grid;place-items:center}
+  .f.ok .n{background:#8fd9a8}.f.drop .n{background:#6a7a70}
+  .f p{margin:0}.f small{color:var(--muted);font-family:system-ui,sans-serif;display:block;margin-top:2px}
+  .tag{font:600 .7rem system-ui,sans-serif;border-radius:6px;padding:1px 7px;margin-right:6px;vertical-align:1px}
+  .t-fix{background:#8fd9a8;color:#12301f}.t-doc{background:var(--blue);color:#10263a}.t-drop{background:#6a7a70;color:#fff}
+  .todo{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+  .todo li{background:var(--felt2);border:1px dashed var(--gold);border-radius:10px;padding:8px 14px}
+  .quote{border-left:3px solid var(--gold);padding:4px 16px;margin:16px 0;font-style:italic;color:#e9e3c9}
+  .quote span{display:block;font:normal .8rem system-ui,sans-serif;color:var(--muted);margin-top:4px}
+  footer{text-align:center;color:var(--muted);margin-top:56px;font:.85rem system-ui,sans-serif}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <span class="badge">CODE REVIEW CREW · 2026-10-07</span>
+    <h1>La revue de blackball-stats</h1>
+    <p>v1.1.0 passée au crible, v1.1.1 prête à partir.</p>
+    <svg class="table" viewBox="0 0 520 150" role="img" aria-label="Un tapis de billard avec trois billes">
+      <rect x="6" y="6" width="508" height="138" rx="26" fill="#0d2a20" stroke="#6b4a2b" stroke-width="10"/>
+      <rect x="20" y="20" width="480" height="110" rx="14" fill="#14382a"/>
+      <circle cx="20" cy="20" r="9" fill="#050d0a"/><circle cx="500" cy="20" r="9" fill="#050d0a"/>
+      <circle cx="20" cy="130" r="9" fill="#050d0a"/><circle cx="500" cy="130" r="9" fill="#050d0a"/>
+      <circle cx="260" cy="20" r="8" fill="#050d0a"/><circle cx="260" cy="130" r="8" fill="#050d0a"/>
+      <g class="ball"><circle cx="150" cy="78" r="13" fill="#f2efe6"/><circle cx="146" cy="73" r="4" fill="#fff" opacity=".7"/></g>
+      <g class="ball b2"><circle cx="300" cy="62" r="13" fill="#e8c468"/><circle cx="296" cy="57" r="4" fill="#fff" opacity=".5"/></g>
+      <g class="ball b3"><circle cx="370" cy="96" r="13" fill="#111"/><circle cx="366" cy="91" r="4" fill="#fff" opacity=".35"/></g>
+    </svg>
+  </header>
+
+  <h2>Autour de la table</h2>
+  <div class="cast">
+    <div class="who"><div class="i">🔒</div><b>Vex</b><small>Sécurité</small></div>
+    <div class="who"><div class="i">😤</div><b>Grumbal</b><small>L'Adversaire</small></div>
+    <div class="who"><div class="i">🌶️</div><b>Boundary</b><small>Cas limites</small></div>
+    <div class="who"><div class="i">🎯</div><b>Yui</b><small>L'Artisane</small></div>
+    <div class="who"><div class="i">🚢</div><b>Dana</b><small>La Pragmatique</small></div>
+  </div>
+
+  <h2>Les échanges qui ont compté</h2>
+  <div class="chat">
+    <div class="m grumbal"><div class="i">😤</div><div class="t"><b>Grumbal</b>Si la base IndexedDB plante, l'appli dit à Fifi qu'il n'a jamais joué. Un <i>console.error</i> que personne ne lit sur un téléphone.</div></div>
+    <div class="m vex"><div class="i">🔒</div><div class="t"><b>Vex</b>Moi, rien. Je ne vais pas inventer un exploit pour avoir l'air utile.</div></div>
+    <div class="m boundary"><div class="i">🌶️</div><div class="t"><b>Boundary</b>La courbe mesure ses choix, pas sa progression : trois figures faciles un soir, et il se croit meilleur.</div></div>
+    <div class="m me"><div class="i">🎱</div><div class="t"><b>Fifi</b>À date, les séances concernent l'ensemble des exercices.</div></div>
+    <div class="m dana"><div class="i">🚢</div><div class="t"><b>Dana</b>Alors le défaut produit devient un risque latent. Tu ne corriges pas un biais qui n'existe pas encore.</div></div>
+    <div class="m yui"><div class="i">🎯</div><div class="t"><b>Yui</b>Le vrai défaut, c'est l'hypothèse non écrite. Une ligne dans D12 suffit.</div></div>
+    <div class="m me"><div class="i">🎱</div><div class="t"><b>Fifi</b>Le code permet de passer un exercice ? Est-ce que le score le considère comme joué ?</div></div>
+    <div class="m yui"><div class="i">🎯</div><div class="t"><b>Yui</b>Il n'existe pas de « passer un exercice ». Seule une séance complète porte un <i>clotureLe</i>.</div></div>
+    <div class="m grumbal"><div class="i">😤</div><div class="t"><b>Grumbal</b>Donc « à tenter » est du code mort. D7 prévoit un cas que le produit ne peut pas produire.</div></div>
+  </div>
+  <div class="quote">« Un tag posé sur un <i>dist</i> périmé, c'est exactement le genre de chose qui me fait dormir tranquille. Pas pour toi. »<span>Grumbal, sur le splash précaché</span></div>
+  <div class="quote">« …Je n'ai rien d'autre à dire. Notez-le, ça n'arrive pas souvent. »<span>Grumbal, en clôture</span></div>
+
+  <h2>Verdict de la revue</h2>
+  <div class="finds">
+    <div class="f ok"><div class="n">✓</div><div><p><span class="tag t-fix">CORRIGÉ</span>Erreur de chargement affichée comme « Aucune séance »</p><small>Nouvel état <code>erreur</code> dans useStats, message dédié dans Stats.tsx</small></div></div>
+    <div class="f ok"><div class="n">✓</div><div><p><span class="tag t-fix">CORRIGÉ</span>Splash de 837 Ko précaché par la PWA</p><small>Réenregistré à 164 Ko par Fifi, d'où le patch 1.1.1</small></div></div>
+    <div class="f ok"><div class="n">✓</div><div><p><span class="tag t-fix">CORRIGÉ</span>Commentaire de SEUIL_MIN_SEANCES : « D3 » devient « D10 »</p></div></div>
+    <div class="f"><div class="n">i</div><div><p><span class="tag t-doc">NOTÉ</span>Une séance terminée couvre tout le niveau (D12)</p><small>Hypothèse vérifiée dans le code ; la courbe se fausserait avec des séances ciblées</small></div></div>
+    <div class="f drop"><div class="n">–</div><div><p><span class="tag t-drop">ÉCARTÉ</span>Sortie de fenêtre d'un exercice « mesuré »</p><small>Tous les exercices ont le même nombre de séances</small></div></div>
+    <div class="f drop"><div class="n">–</div><div><p><span class="tag t-drop">ÉCARTÉ</span>Faute comptée comme réussite</p><small>Faute et séquence complète ne coexistent jamais : <code>essaiEstClos</code> bloque tout appui</small></div></div>
+    <div class="f drop"><div class="n">–</div><div><p><span class="tag t-drop">RIEN</span>Sécurité</p><small>Appli locale, aucune entrée hostile, pas de réseau</small></div></div>
+  </div>
+
+  <h2>Il te reste</h2>
+  <ul class="todo">
+    <li>☐ <code>npm run build</code> et vérifier le splash à 164 Ko dans <code>dist</code></li>
+    <li>☐ Commit et tag <b>v1.1.1</b></li>
+    <li>☐ Optionnel : un <code>assert</code> dans verify-stats pour figer « une séance couvre tout le niveau »</li>
+    <li>☐ Optionnel : recaler le <code>package-lock.json</code>, resté à 0.1.0</li>
+  </ul>
+
+  <h2>Pour le REX</h2>
+  <p>L'hypothèse la plus importante du calcul n'était écrite nulle part ; il a fallu une revue pour la sortir du code. Le journal de décisions dit <i>pourquoi</i>, il ne protège pas les <i>hypothèses</i>.</p>
+
+  <footer>Souvenir de la session · Code Review Crew · DF-Labs · 2026-10-07</footer>
+</main>
+</body>
+</html>
