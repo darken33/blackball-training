@@ -10,7 +10,7 @@ import type { ExerciceStat, PointProgression, SeanceStats } from './types'
 
 /** Fenetre de calcul : les N dernieres seances terminees du niveau (D5). */
 export const TAILLE_FENETRE = 10
-/** Sous ce nombre de seances jouees, aucun indice n'est affiche (comptes bruts, D3). */
+/** Sous ce nombre de seances jouees, aucun indice n'est affiche (comptes bruts, D10). */
 export const SEUIL_MIN_SEANCES = 3
 
 /** Difficulte d'un exercice sur une seance (D4) : reussi essai 1 = 0, essai 2 = 1, essai 3 = 2,

@@ -75,7 +75,7 @@ function LigneFaible({ stat }: { stat: ExerciceStat }) {
 }
 
 export function Stats() {
-  const { chargement, niveau, changerNiveau, aucuneSeance, pointsFaibles, aTenter, insuffisants, progression } = useStats()
+  const { chargement, erreur, niveau, changerNiveau, aucuneSeance, pointsFaibles, aTenter, insuffisants, progression } = useStats()
 
   return (
     <div className="stats">
@@ -90,9 +90,10 @@ export function Stats() {
       </div>
 
       {chargement && <p className="stats-note">Chargement…</p>}
-      {!chargement && aucuneSeance && <p className="stats-note">Aucune séance {LIBELLE_NIVEAU[niveau]} terminée pour l'instant.</p>}
+      {!chargement && erreur && <p className="stats-note">Impossible de charger les séances. Ferme puis rouvre l'application ; tes données ne sont pas perdues.</p>}
+      {!chargement && !erreur && aucuneSeance && <p className="stats-note">Aucune séance {LIBELLE_NIVEAU[niveau]} terminée pour l'instant.</p>}
 
-      {!chargement && !aucuneSeance && (
+      {!chargement && !erreur && !aucuneSeance && (
         <>
           <h2>Progression</h2>
           <Courbe points={progression} />

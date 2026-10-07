@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Souvenir — Blackball v1.1.0</title>
+<style>
+:root{--bg:#101a15;--raised:#182620;--overlay:#213328;--line:#2c4034;--ink:#f4f1e8;--soft:#9bae9f;--green:#2a7440;--ok:#3fa34d;--bad:#c0392b;--gold:#e0b84a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px 64px}
+header{text-align:center;padding:56px 0 24px;position:relative;overflow:hidden}
+header h1{margin:8px 0 4px;font-size:clamp(28px,6vw,44px);letter-spacing:.02em}
+header p{color:var(--soft);margin:0}
+.badge{display:inline-block;margin-top:14px;padding:4px 14px;border:1px solid var(--gold);color:var(--gold);border-radius:999px;font-variant-numeric:tabular-nums}
+.table{position:relative;height:150px;margin:24px 0;background:radial-gradient(ellipse at center,#2a7440 0,#1d5530 70%);border:8px solid #3b2417;border-radius:18px;overflow:hidden}
+.ball{position:absolute;width:26px;height:26px;border-radius:50%;box-shadow:inset -4px -4px 6px rgba(0,0,0,.35),0 2px 4px rgba(0,0,0,.4)}
+.b1{background:#c0392b;animation:roll1 7s ease-in-out infinite alternate}
+.b2{background:#e0b84a;animation:roll2 9s ease-in-out infinite alternate}
+.b3{background:#111;animation:roll3 11s ease-in-out infinite alternate}
+.b4{background:#f4f1e8;animation:roll4 6s ease-in-out infinite alternate}
+@keyframes roll1{from{left:8%;top:20%}to{left:70%;top:60%}}
+@keyframes roll2{from{left:80%;top:70%}to{left:20%;top:30%}}
+@keyframes roll3{from{left:45%;top:15%}to{left:55%;top:70%}}
+@keyframes roll4{from{left:10%;top:70%}to{left:85%;top:20%}}
+.pocket{position:absolute;width:30px;height:30px;border-radius:50%;background:#050805}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:24px 0}
+.metric{background:var(--raised);border-radius:14px;padding:16px;text-align:center}
+.metric b{display:block;font-size:28px;font-variant-numeric:tabular-nums}
+.metric span{color:var(--soft);font-size:13px}
+h2{margin:40px 0 12px;font-size:20px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.chat{display:flex;flex-direction:column;gap:12px}
+.msg{display:flex;gap:10px;align-items:flex-start;animation:rise .6s both}
+.msg:nth-child(2){animation-delay:.1s}.msg:nth-child(3){animation-delay:.2s}.msg:nth-child(4){animation-delay:.3s}.msg:nth-child(5){animation-delay:.4s}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.av{flex:none;width:42px;height:42px;border-radius:50%;background:var(--overlay);display:grid;place-items:center;font-size:22px;border:2px solid var(--line)}
+.bub{background:var(--raised);border-radius:4px 14px 14px 14px;padding:10px 14px}
+.bub strong{display:block;font-size:13px;color:var(--soft);margin-bottom:2px}
+.fifi{flex-direction:row-reverse}.fifi .bub{background:var(--green);border-radius:14px 4px 14px 14px}.fifi .bub strong{color:#cfe8d3;text-align:right}
+.scale{background:var(--raised);border-radius:14px;padding:16px}
+.scale .row{display:flex;align-items:center;gap:10px;margin:6px 0}
+.scale .row i{flex:1;height:8px;border-radius:99px;background:var(--overlay);overflow:hidden}
+.scale .row i u{display:block;height:100%;background:var(--bad)}
+.scale small{width:80px;color:var(--soft)}
+ul.take{padding-left:20px}ul.take li{margin:8px 0}
+.rule{margin:24px 0;padding:18px;border:1px dashed var(--gold);border-radius:14px;text-align:center;font-size:18px}
+.rule em{color:var(--gold);font-style:normal}
+footer{text-align:center;color:var(--soft);margin-top:48px;font-size:13px}
+@media (prefers-reduced-motion:reduce){.ball,.msg{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>🎱</div>
+  <h1>Carnet de Score Blackball</h1>
+  <p>La salle autour de la table — 4 et 5 octobre 2026</p>
+  <span class="badge">v1.0.2 → v1.1.0</span>
+  <div class="table" aria-hidden="true">
+    <span class="pocket" style="left:-8px;top:-8px"></span><span class="pocket" style="left:calc(50% - 15px);top:-12px"></span><span class="pocket" style="right:-8px;top:-8px"></span>
+    <span class="pocket" style="left:-8px;bottom:-8px"></span><span class="pocket" style="left:calc(50% - 15px);bottom:-12px"></span><span class="pocket" style="right:-8px;bottom:-8px"></span>
+    <span class="ball b1"></span><span class="ball b2"></span><span class="ball b3"></span><span class="ball b4"></span>
+  </div>
+</header>
+
+<div class="metrics">
+  <div class="metric"><b>~1h30</b><span>durée réelle</span></div>
+  <div class="metric"><b>~6 %</b><span>de la fenêtre de 5 h<br>(rétro-spec incluse)</span></div>
+  <div class="metric"><b>Sonnet 5.5</b><span>modèle</span></div>
+  <div class="metric"><b>6</b><span>capacités livrées<br>CAP-1 à CAP-6</span></div>
+</div>
+
+<h2>Acte I — « Il faudrait une version »</h2>
+<div class="chat">
+  <div class="msg fifi"><div class="av">🎱</div><div class="bub"><strong>Fifi</strong>La version actuelle serait la 1.0.2, et celle qu'on fait la 1.1.0.</div></div>
+  <div class="msg"><div class="av">🏗️</div><div class="bub"><strong>Winston</strong>Une seule source de vérité : <code>package.json</code>. Injectée à la build, jamais codée en dur deux fois.</div></div>
+  <div class="msg"><div class="av">🧪</div><div class="bub"><strong>Murat</strong>Avec <code>autoUpdate</code>, personne ne sait quelle version tourne sur son téléphone. Le vrai besoin, c'est de la voir.</div></div>
+</div>
+
+<h2>Acte II — « Est-ce que je progresse ? »</h2>
+<div class="chat">
+  <div class="msg"><div class="av">⚡</div><div class="bub"><strong>Victor</strong>Une jauge « probabilité de réussir le diplôme » ! Tout le reste, c'est de la déco.</div></div>
+  <div class="msg"><div class="av">💻</div><div class="bub"><strong>Amelia</strong>Avec trois séances de données, une probabilité est du bruit déguisé en chiffre.</div></div>
+  <div class="msg fifi"><div class="av">🎱</div><div class="bub"><strong>Fifi</strong>L'objectif n'est pas de passer le diplôme, mais d'avoir des exercices pour mes entraînements.</div></div>
+  <div class="msg"><div class="av">⚡</div><div class="bub"><strong>Victor</strong>…Ma jauge est morte. Tant mieux. Tu viens de changer la partie : un outil de prescription.</div></div>
+  <div class="msg"><div class="av">🧪</div><div class="bub"><strong>Murat</strong>Un indice de difficulté : essai 1 = maîtrisé, essai 2 = fragile, essai 3 = limite, échec = problème.</div></div>
+</div>
+
+<h2>L'indice, en un coup d'œil</h2>
+<div class="scale">
+  <div class="row"><small>Maîtrisé</small><i><u style="width:2%"></u></i><span>0</span></div>
+  <div class="row"><small>Fragile</small><i><u style="width:33%"></u></i><span>1</span></div>
+  <div class="row"><small>Limite</small><i><u style="width:66%"></u></i><span>2</span></div>
+  <div class="row"><small>Problème</small><i><u style="width:100%"></u></i><span>3</span></div>
+  <p style="color:var(--soft);font-size:13px;margin:10px 0 0">10 dernières séances, récence pondérée linéairement, évalué à partir de 3 séances. Top 5 par niveau, plus les exercices « à tenter ».</p>
+</div>
+
+<h2>Acte III — La salle et l'écran</h2>
+<div class="chat">
+  <div class="msg"><div class="av">🎨</div><div class="bub"><strong>Sally</strong>Une main sur la queue, pas de tableau de bord à douze graphiques : trois chiffres et une courbe.</div></div>
+  <div class="msg fifi"><div class="av">🎱</div><div class="bub"><strong>Fifi</strong>Le graphique n'est pas très visible, ne pourrait-on pas inclure une échelle ?</div></div>
+  <div class="msg"><div class="av">📖</div><div class="bub"><strong>Sophia</strong>Et ta courbe qui descend vers la paix, de « Problème » à « Maîtrisé ».</div></div>
+  <div class="msg"><div class="av">🎬</div><div class="bub"><strong>Caravaggio</strong>Opacité 50 %, petit corps, tabular-nums : le badge est une signature, pas une enseigne.</div></div>
+</div>
+
+<h2>Acte IV — « Nous n'avons pas de spec ? »</h2>
+<div class="chat">
+  <div class="msg fifi"><div class="av">🎱</div><div class="bub"><strong>Fifi</strong>Ah, c'est dommage… comment pourrions-nous faire mieux à l'avenir ?</div></div>
+  <div class="msg"><div class="av">🏗️</div><div class="bub"><strong>Winston</strong>Les correctifs 1.0.1 et 1.0.2 ont leur spec. La plus grosse évolution n'en a pas : c'est incohérent.</div></div>
+  <div class="msg"><div class="av">⚡</div><div class="bub"><strong>Victor</strong>Une spec formelle au milieu du flot aurait cassé le rythme qui nous a donné ces idées.</div></div>
+  <div class="msg"><div class="av">🧪</div><div class="bub"><strong>Murat</strong>D'accord, à une condition : c'est toi qui dis « on fige ».</div></div>
+  <div class="msg"><div class="av">🛑</div><div class="bub"><strong>Killjoy</strong>Soyons honnêtes : une rétro-spec, c'est de la documentation, pas du design first.</div></div>
+</div>
+<div class="rule">On discute librement, <em>puis on fige</em>. Spec avant code pour toute évolution qui change le comportement.</div>
+
+<h2>À retenir pour le REX</h2>
+<ul class="take">
+  <li>La salle est bonne pour <strong>diverger</strong> ; la traçabilité demande une spec écrite avant le code.</li>
+  <li>Le test écrit d'abord a tenu (<code>verify-stats</code> vert du premier coup) ; l'UI n'a aucun test, donc les défauts en usage réel restent à relever.</li>
+  <li>Mesures relevées de l'extérieur : <strong>~1h30, ~6 %</strong>. Comparaison avec le cycle BMad indicative (périmètres différents).</li>
+  <li>Prochaine étape : tester l'onglet Stats en salle de billard, puis compléter le REX.</li>
+</ul>
+
+<footer>
+  🎱 DF-Labs · expérience « stats conçues en salle » · v1.1.0 déployée<br>
+  Traces : experiments/blackball-stats-salle/DECISIONS.md · spec-stats-entrainement.md (rétroactive)
+</footer>
+</div>
+</body>
+</html>

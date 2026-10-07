@@ -13,6 +13,8 @@ const NB_POINTS_FAIBLES = 5
 
 export interface UseStatsResult {
   chargement: boolean
+  /** Le chargement des seances a echoue : l'ecran l'indique au lieu d'un faux etat vide. */
+  erreur: boolean
   niveau: Niveau
   changerNiveau: (niveau: Niveau) => void
   /** Aucune seance terminee pour le niveau choisi : l'ecran affiche un etat vide. */
@@ -26,6 +28,7 @@ export interface UseStatsResult {
 
 export function useStats(): UseStatsResult {
   const [seances, setSeances] = useState<SeanceStats[] | null>(null)
+  const [erreur, setErreur] = useState(false)
   const [niveau, changerNiveau] = useState<Niveau>('bronze')
 
   useEffect(() => {
@@ -37,9 +40,11 @@ export function useStats(): UseStatsResult {
         if (annule) return
         setSeances(details.map(({ session, exercicesJoues }) => ({ id: session.id, niveau: session.niveau, demarreeLe: session.demarreeLe, exercicesJoues })))
       })
-      .catch((erreur: unknown) => {
-        console.error('useStats: echec du chargement des seances terminees', erreur)
-        if (!annule) setSeances([])
+      .catch((cause: unknown) => {
+        console.error('useStats: echec du chargement des seances terminees', cause)
+        if (annule) return
+        setErreur(true)
+        setSeances([])
       })
     return () => {
       annule = true
@@ -58,5 +63,5 @@ export function useStats(): UseStatsResult {
     }
   }, [seances, niveau])
 
-  return { chargement: seances === null, niveau, changerNiveau, ...derive }
+  return { chargement: seances === null, erreur, niveau, changerNiveau, ...derive }
 }

@@ -3,6 +3,14 @@
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) ; versionnement [SemVer](https://semver.org/lang/fr/).
 La version affichée dans l'application (en haut à droite des écrans) vient du champ `version` de `package.json`.
 
+## [1.1.1] — 2026-10-07
+
+### Corrigé
+- Onglet Stats : une erreur de chargement des séances affiche désormais un message d'erreur au lieu de « Aucune séance terminée ».
+
+### Modifié
+- Écran titre allégé (837 Ko → 164 Ko) : l'image du splash est précachée par la PWA, elle alourdissait le premier chargement.
+
 ## [1.1.0] — 2026-10-05
 
 ### Ajouté
