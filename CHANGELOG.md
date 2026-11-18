@@ -3,6 +3,14 @@
 Format inspiré de [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/) ; versionnement [SemVer](https://semver.org/lang/fr/).
 La version affichée dans l'application (en haut à droite des écrans) vient du champ `version` de `package.json`.
 
+## [1.2.0] — 2026-11-18
+
+### Ajouté
+- **Schéma de la figure dans les accordéons** : un tap sur un exercice affiche son schéma officiel, dans le détail d'une séance (Historique) et dans les Points faibles (Stats).
+  - Une seule ligne ouverte à la fois : ouvrir une ligne referme la précédente.
+  - Stats : tout est replié à l'arrivée sur l'onglet et au changement de niveau Bronze / Argent / Or.
+- Garde-fou `npm run verify-accordeon`.
+
 ## [1.1.1] — 2026-10-07
 
 ### Corrigé

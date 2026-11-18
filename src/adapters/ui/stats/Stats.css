@@ -54,11 +54,25 @@
 }
 
 .stats-row {
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.stats-row.expanded {
+  background: var(--surface-overlay);
+}
+
+.stats-head {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr auto;
   gap: var(--sp-1) var(--sp-3);
   padding: var(--sp-3) var(--sp-4);
-  border-bottom: 1px solid var(--border-hairline);
+  min-height: var(--tap-min);
+  border: none;
+  background: transparent;
+  text-align: left;
+  color: inherit;
+  font: inherit;
 }
 
 .stats-row:last-child {

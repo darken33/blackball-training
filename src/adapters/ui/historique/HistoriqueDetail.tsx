@@ -1,6 +1,7 @@
-import { useState } from 'react'
 import type { HistoriqueDetail as HistoriqueDetailVue } from '../../../application/historique'
 import { LIBELLE_NIVEAU } from '../shared/labels'
+import { SchemaExercice } from '../shared/SchemaExercice'
+import { useAccordeonUnique } from '../shared/useAccordeonUnique'
 import './HistoriqueDetail.css'
 
 // Vue Detail d'une seance close (FR-10/FR-11) : titre, score/seuil, accordeon par exercice
@@ -13,7 +14,7 @@ export interface HistoriqueDetailProps {
 }
 
 export function HistoriqueDetail({ detail, onRetour }: HistoriqueDetailProps) {
-  const [exerciceOuvert, setExerciceOuvert] = useState<string | null>(null)
+  const { ouvert: exerciceOuvert, basculer } = useAccordeonUnique()
 
   return (
     <div className="historique-detail">
@@ -32,11 +33,13 @@ export function HistoriqueDetail({ detail, onRetour }: HistoriqueDetailProps) {
               <button
                 type="button"
                 className="expanded-head"
-                onClick={() => setExerciceOuvert(ouvert ? null : exercice.exerciceId)}
+                onClick={() => basculer(exercice.exerciceId)}
               >
                 <span className="name">{exercice.nom}</span>
                 <span className="score">{exercice.scoreExercice} pts</span>
               </button>
+
+              {ouvert && <SchemaExercice exerciceId={exercice.exerciceId} />}
 
               {ouvert &&
                 exercice.essais.map((essai) => (

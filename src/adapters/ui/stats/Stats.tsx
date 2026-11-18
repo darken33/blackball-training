@@ -2,6 +2,8 @@ import { listerNiveaux } from '../../../domain/catalog'
 import { useStats } from '../../../application/stats'
 import type { ExerciceStat, PointProgression } from '../../../application/stats'
 import { LIBELLE_NIVEAU } from '../shared/labels'
+import { SchemaExercice } from '../shared/SchemaExercice'
+import { useAccordeonUnique } from '../shared/useAccordeonUnique'
 import './Stats.css'
 
 // Onglet Stats (D6-D8, experiments/blackball-stats-salle) : "est-ce que je progresse" et
@@ -59,22 +61,26 @@ function Courbe({ points }: { points: PointProgression[] }) {
   )
 }
 
-function LigneFaible({ stat }: { stat: ExerciceStat }) {
+function LigneFaible({ stat, ouvert, onBascule }: { stat: ExerciceStat; ouvert: boolean; onBascule: () => void }) {
   const indice = stat.indice ?? 0
   return (
-    <li className="stats-row">
-      <span className="stats-nom">{stat.nom}</span>
-      <span className="stats-barre" aria-hidden="true">
-        <span style={{ width: `${(indice / INDICE_MAX) * 100}%` }} />
-      </span>
-      <span className="stats-indice">
-        {indice.toFixed(1)} <small>sur {stat.nbSeances} séances</small>
-      </span>
+    <li className={`stats-row${ouvert ? ' expanded' : ''}`}>
+      <button type="button" className="stats-head" aria-expanded={ouvert} onClick={onBascule}>
+        <span className="stats-nom">{stat.nom}</span>
+        <span className="stats-barre" aria-hidden="true">
+          <span style={{ width: `${(indice / INDICE_MAX) * 100}%` }} />
+        </span>
+        <span className="stats-indice">
+          {indice.toFixed(1)} <small>sur {stat.nbSeances} séances</small>
+        </span>
+      </button>
+      {ouvert && <SchemaExercice exerciceId={stat.exerciceId} />}
     </li>
   )
 }
 
 export function Stats() {
+  const accordeon = useAccordeonUnique()
   const { chargement, erreur, niveau, changerNiveau, aucuneSeance, pointsFaibles, aTenter, insuffisants, progression } = useStats()
 
   return (
@@ -83,7 +89,10 @@ export function Stats() {
 
       <div className="stats-niveaux" role="tablist">
         {listerNiveaux().map((n) => (
-          <button key={n} type="button" role="tab" aria-selected={n === niveau} className={n === niveau ? 'active' : ''} onClick={() => changerNiveau(n)}>
+          <button key={n} type="button" role="tab" aria-selected={n === niveau} className={n === niveau ? 'active' : ''} onClick={() => {
+              accordeon.replier()
+              changerNiveau(n)
+            }}>
             {LIBELLE_NIVEAU[n]}
           </button>
         ))}
@@ -105,7 +114,7 @@ export function Stats() {
           ) : (
             <ul className="stats-liste">
               {pointsFaibles.map((stat) => (
-                <LigneFaible key={stat.exerciceId} stat={stat} />
+                <LigneFaible key={stat.exerciceId} stat={stat} ouvert={accordeon.ouvert === stat.exerciceId} onBascule={() => accordeon.basculer(stat.exerciceId)} />
               ))}
             </ul>
           )}
